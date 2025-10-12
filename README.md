@@ -2,7 +2,7 @@
 
 # Public-Key derived HMAC for JOSE
 
-This is the working area for the individual Internet-Draft, "Designated Verifier Signatures for JOSE".
+This is the working area for the individual Internet-Draft, "Public-Key derived HMAC for JOSE".
 
 * [Editor's Copy](https://paulbastian.github.io/draft-bastian-jose-pkdh/#go.draft-bastian-jose-pkdh.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-bastian-jose-pkdh)
