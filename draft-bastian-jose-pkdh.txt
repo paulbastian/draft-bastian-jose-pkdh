@@ -13,7 +13,7 @@ Expires: 15 April 2026                                      S. Santesson
 
 
                     Public Key Derived HMAC for JOSE
-                     draft-bastian-jose-dvs-latest
+                     draft-bastian-jose-pkdh-latest
 
 Abstract
 
@@ -27,9 +27,9 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://paulbastian.github.io/draft-bastian-jose-dvs/draft-bastian-
-   jose-dvs.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-bastian-jose-dvs/.
+   https://paulbastian.github.io/draft-bastian-jose-pkdh/draft-bastian-
+   jose-pkdh.html.  Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-bastian-jose-pkdh/.
 
    Discussion of this document takes place on the Javascript Object
    Signing and Encryption Working Group mailing list
@@ -38,7 +38,7 @@ About This Document
    https://www.ietf.org/mailman/listinfo/jose/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/paulbastian/draft-bastian-jose-dvs.
+   https://github.com/paulbastian/draft-bastian-jose-pkdh.
 
 Status of This Memo
 
