@@ -5,11 +5,11 @@
 Javascript Object Signing and Encryption                      P. Bastian
 Internet-Draft                                                  M. Kraus
 Intended status: Informational                      Bundesdruckerei GmbH
-Expires: 3 April 2026                                       S. Santesson
+Expires: 15 April 2026                                      S. Santesson
                                                          IDsec Solutions
                                                            P. L. Altmann
                                        The Agency for Digital Government
-                                                       30 September 2025
+                                                         12 October 2025
 
 
                     Public Key Derived HMAC for JOSE
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 April 2026.
+   This Internet-Draft will expire on 15 April 2026.
 
 Copyright Notice
 
@@ -322,17 +322,8 @@ Table of Contents
       resolved unambiguously at validation time or is incompatible with
       the key information in rpk.
 
-   *  kdfp (object, OPTIONAL): Contains the inputs to the key derivation
-      function specified by the alg name.  The kdfp object MUST contain
-      the following members:
-
-      -  info (string, OPTIONAL): Context- and application-specific
-         information used as the info parameter to the KDF.
-
-      -  salt (string, OPTIONAL): A base64url-encoded non-secret value
-         used as the salt input to the KDF.  If omitted, the KDF-
-         specific default applies.  If present, the decoded salt MUST be
-         valid for use with the KDF defined by the alg name.
+   *  info (string, OPTIONAL): Context- and application-specific
+      information used as the info parameter to the KDF.
 
    For a machine-readable definition of these fields, see the JSON
    Schema in Appendix A (Appendix B).
@@ -342,14 +333,34 @@ Table of Contents
    The JWT/JWS header:
 
    {
-       "typ" : "JWT",
-       **TODO**
+     "typ":"JWT",
+     "alg":"ECDH-P256+HKDF-SHA256+HS256",
+     "pkds":{
+       "pkS":{
+         "jwk":{
+           "kty":"EC",
+           "crv":"P-256",
+           "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+           "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"
+         }
+       },
+       "pkR":{
+         "jwk":{
+           "kty":"EC",
+           "crv":"P-256",
+           "x":"vWV4vmRT8HV9QAkbZJAWrvjOV0NfNOzkzq92apq8yjk",
+           "y":"XGJRplhubKDv6cFA7e9-yn7F89UUwt57JVLAOS1tpXE"
+         }
+       },
+       "info":"PKDS-v1"
+     }
    }
 
    The JWT/JWS payload (TODO!:
 
    {
-      **TODO**
+     "sub": "1234567890",
+     "iat": 1516239022
    }
 
    The JWT/JWS signature:
@@ -359,14 +370,13 @@ Table of Contents
    This specification described instantiations of Public Key Derived
    HMAC using specific algorithm combinations:
 
-+-----------------------+-----------------------------+----------------+
-| Algorithm Name        | Algorithm Description       |                |
-|                       |                             | Requirements   |
-+-----------------------+-----------------------------+----------------+
-| **TODO**              | ECDH using NIST P-256,      |   Optional     |
-|                       | HKDF using SHA-256 and      |                |
-|                       | HMAC using SHA-256          |                |
-+-----------------------+-----------------------------+----------------+
++-------------------------------+--------------------------+----------------+
+| Algorithm Name                | Algorithm Description    | Requirements   |
++-------------------------------+--------------------------+----------------+
+| "ECDH-P256+HKDF-SHA256+HS256" | ECDH using NIST P-256,   |   Optional     |
+|                               | HKDF using SHA-256, and  |                |
+|                               | HMAC using SHA-256       |                |
++-------------------------------+--------------------------+----------------+
 
 7.  Security Considerations
 
