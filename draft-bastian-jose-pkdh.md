@@ -202,13 +202,13 @@ The pkds protected header parameter specifies the inputs needed to derive a symm
 
 The `pkds` Header Parameter value MUST be a JSON object with the following fields:
 
-* `rpk` (object, REQUIRED): The Recipient's public key used in DH-KA. The `rpk` object MUST contain at least one key claim as defined in Section 4.1 of {{RFC7515}}.
+* `pkr` (object, REQUIRED): The Recipient's public key used in DH-KA. The `pkr` object MUST contain at least one key claim as defined in Section 4.1 of {{RFC7515}}.
 
-  Implementations MUST reject a JWS if the `rpk` key cannot be resolved unambiguously at validation time.
+  Implementations MUST reject a JWS if the `pkr` key cannot be resolved unambiguously at validation time.
 
-* `ppk` (object, OPTIONAL):  The JWS Producer’s public key used in DH-KA. The `ppk` object MUST contain at least one key claim as defined in Section 4.1 of {{RFC7515}}.
+* `pkp` (object, OPTIONAL):  The JWS Producer’s public key used in DH-KA. The `pkp` object MUST contain at least one key claim as defined in Section 4.1 of {{RFC7515}}.
 
-  Implementations MUST reject a JWS if the `ppk` key cannot be resolved unambiguously at validation time or is incompatible with the key information in `rpk`.
+  Implementations MUST reject a JWS if the `pkp` key cannot be resolved unambiguously at validation time or is incompatible with the key information in `pkr`.
 
 * `info` (string, OPTIONAL): Context- and application-specific information used as the info parameter to the KDF.
 
@@ -225,7 +225,7 @@ The JWT/JWS header:
   "typ":"JWT",
   "alg":"ECDH-P256+HKDF-SHA256+HS256",
   "pkds":{
-    "pkS":{
+    "pkp":{
       "jwk":{
         "kty":"EC",
         "crv":"P-256",
@@ -233,7 +233,7 @@ The JWT/JWS header:
         "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"
       }
     },
-    "pkR":{
+    "pkr":{
       "jwk":{
         "kty":"EC",
         "crv":"P-256",
@@ -276,7 +276,7 @@ This specification described instantiations of Public Key Derived HMAC using spe
 # Security Considerations
 
 ## Replay Attack Detection
-Recipient MUST ensure the freshness of signatures by utilizing ephemeral keys in `rpk` or by providing a nonce for `nonce`.
+Recipient MUST ensure the freshness of signatures by utilizing ephemeral keys in `pkr` or by providing a nonce for `nonce`.
 
 ## Limited Repudiability
 A malicious Recipient can weaken the repudiability property by involving certain third parties in the protocol steps.
@@ -310,10 +310,10 @@ Thanks to:
   "title": "JOSE Header Parameter: pkds",
   "type": "object",
   "properties": {
-    "ppk": {
+    "pkp": {
       "$ref": "#/$defs/keyRef"
     },
-    "rpk": {
+    "pkr": {
       "$ref": "#/$defs/keyRef"
     },
     "params": {
@@ -321,7 +321,7 @@ Thanks to:
     }
   },
   "required": [
-    "rpk"
+    "pkr"
   ],
   "additionalProperties": false,
   "$defs": {
