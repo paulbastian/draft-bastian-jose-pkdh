@@ -144,7 +144,7 @@ Input:
 Function:
 
 ~~~
-def pkdHhmacSign(skP, pkR, msg, salt, info)
+def pkdHmacSign(skP, pkR, msg, salt, info)
 
     dh =  DH(skP, pkR)
     prk = Extract(salt, dh)
@@ -160,7 +160,7 @@ The generation of the public key derived HMAC uses the Recipient's private key, 
 Input:
 
  * `skR`: private key of the Recipient
- * `pkS`: public key of the Producer
+ * `pkP`: public key of the Producer
  * `msg`: JWS Signing Input
  * `salt` : Optional salt for key derivation
  * `info` : Optional info for key derivation
@@ -169,9 +169,9 @@ Input:
 Function:
 
 ~~~
-def pkdHhmacVerify(skR, pkS, msg, signature, salt, info)
+def pkdHmacVerify(skR, pkP, msg, signature, salt, info)
 
-    dh =  DH(skR, pkS)
+    dh =  DH(skR, pkP)
     prk = Extract(salt, dh)
     k = Expand(prk, info, Nk)
     signature' = MacSign(k, msg)
