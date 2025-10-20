@@ -79,7 +79,7 @@ This specification defines the use of a Diffie-Hellman key agreement (DH-KA) pro
 
 JSON Web Signature (JWS) {{RFC7515}} and JSON Web Algorithms (JWA) {{RFC7518}} specify how to secure content with Hash-based Message Authentication Codes (HMAC) {{RFC2104}} using a shared symmetric key. These specifications do not provide means to dynamically derive a MAC key for JWS validation using only public information embedded in the JWS.
 
-This specification defines a new protected header parameter, `pkds` (public key derived secret), which contains information required to derive an HMAC key using a Diffie-Hellman key agreement (DH-KA) and a key derivation function (KDF). The JWS Producer's DH-KA public key appears either in the `pkds` parameter or in a claims element for use in the key agreement computation. The `pkds` parameter also includes the JWS Recipient's DH-KA public key, used by the JWS Producer during key agreement, as well as the KDF parameters necessary for deriving the MAC key.
+This specification defines a new protected header parameter, `pkdh` (public key derived HMAC), which contains information required to derive an HMAC key using a Diffie-Hellman key agreement (DH-KA) and a key derivation function (KDF). The JWS Producer's DH-KA public key appears either in the `pkdh` parameter or in a claims element for use in the key agreement computation. The `pkdh` parameter also includes the JWS Recipient's DH-KA public key, used by the JWS Producer during key agreement, as well as the KDF parameters necessary for deriving the MAC key.
 
 This specification also defines new `alg` parameter values, that are fully-specified according to [Fully Specified Algorithms](https://www.ietf.org/archive/id/draft-jones-jose-fully-specified-algorithms-00.html).
 
@@ -190,17 +190,17 @@ Public Key Derived HMAC behave like a digital signature as described in Section 
 The following JWS headers are used to convey Public Key Derived HMAC for JOSE:
 
  * `alg` : REQUIRED. The algorithm parameter describes the chosen signature suite, for example the ones described in [Suites](#generic_suites).
- * `pkds` : REQUIRED. The `pkds` (Public key derived secret) parameter specifies the inputs needed to derive a symmetric key for MAC [PKDS Headermake](#pkds_header).
+ * `pkdh` : REQUIRED. The `pkdh` (public key derived HMAC) parameter specifies the inputs needed to derive a symmetric key for MAC [PKDH Headermake](#pkdh_header).
  * `nonce` : OPTIONAL. The `nonce` may be provided by the Recipient additional to it's public key and ensure additional freshness of the signature. If provided, the Producer SHOULD add the `nonce` to the header.
 
 
-## The "pkds" Header Parameter {#pkds_header}
+## The "pkdh" Header Parameter {#pkdh_header}
 
-The pkds protected header parameter specifies the inputs needed to derive a symmetric key for MAC computation using a key agreement and derivation scheme. Its value is a JSON object that includes identifiers, public keys, and algorithm-specific parameters relevant to the derivation.
+The pkdh protected header parameter specifies the inputs needed to derive a symmetric key for MAC computation using a key agreement and derivation scheme. Its value is a JSON object that includes identifiers, public keys, and algorithm-specific parameters relevant to the derivation.
 
 ### Syntax and semantics
 
-The `pkds` Header Parameter value MUST be a JSON object with the following fields:
+The `pkdh` Header Parameter value MUST be a JSON object with the following fields:
 
 * `pkr` (object, REQUIRED): The Recipient's public key used in DH-KA. The `pkr` object MUST contain at least one key claim as defined in Section 4.1 of {{RFC7515}}.
 
@@ -224,7 +224,7 @@ The JWT/JWS header:
 {
   "typ":"JWT",
   "alg":"ECDH-P256+HKDF-SHA256+HS256",
-  "pkds":{
+  "pkdh":{
     "pkp":{
       "jwk":{
         "kty":"EC",
@@ -241,7 +241,7 @@ The JWT/JWS header:
         "y":"XGJRplhubKDv6cFA7e9-yn7F89UUwt57JVLAOS1tpXE"
       }
     },
-    "info":"PKDS-v1"
+    "info":"PKDH-v1"
   }
 }
 ~~~
@@ -289,7 +289,7 @@ A malicious Recipient can weaken the repudiability property by involving certain
 
 Define:
 
-- define new `pkds` header parameter
+- define new `pkdh` header parameter
 - alg values for **TODO** and some more
 
 --- back
@@ -301,13 +301,13 @@ Thanks to:
 - Brian Campbell
 - John Bradley
 
-# Appendix A. JSON Schema for the "pkds" Header Parameter  {#appendix-a}
+# Appendix A. JSON Schema for the "pkdh" Header Parameter  {#appendix-a}
 
-```JSON
+~~~
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/pkds.schema.json",
-  "title": "JOSE Header Parameter: pkds",
+  "$id": "https://example.com/schemas/pkdh.schema.json",
+  "title": "JOSE Header Parameter: pkdh",
   "type": "object",
   "properties": {
     "pkp": {
@@ -315,6 +315,9 @@ Thanks to:
     },
     "pkr": {
       "$ref": "#/$defs/keyRef"
+    },
+    "info": {
+      "type": "string"
     },
     "params": {
       "type": "object"
@@ -394,4 +397,4 @@ Thanks to:
     }
   }
 }
-```
+~~~
