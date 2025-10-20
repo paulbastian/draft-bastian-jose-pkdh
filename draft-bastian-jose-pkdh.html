@@ -1273,7 +1273,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <dt id="section-3-2.1">
 <strong>Producer</strong>:</dt>
         <dd style="margin-left: 1.5em" id="section-3-2.2">
-          <p id="section-3-2.2.1">The party that performs the DH-KA first, derives the MAC key via a KDF, constructs the JOSE Header and JWS Payload, and computes the JWS Signature.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-2.2.1">The party that performs the DH-KA first, derives the MAC key via a KDF, constructs the JOSE Header and JWS Payload, and computes the JWS Signature value.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-3-2.3">
@@ -1370,10 +1370,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             <p id="section-5.1-3.3.1"><code>msg</code>: JWS Signing Input<a href="#section-5.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-3.4">
-            <p id="section-5.1-3.4.1"><code>salt</code> : Optional salt for key derivation<a href="#section-5.1-3.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.4.1"><code>salt</code> : salt for key derivation<a href="#section-5.1-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.1-3.5">
-            <p id="section-5.1-3.5.1"><code>info</code> : Optional info for key derivation<a href="#section-5.1-3.5.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-3.5.1"><code>info</code> : info for key derivation<a href="#section-5.1-3.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.1-4">Function:<a href="#section-5.1-4" class="pilcrow">¶</a></p>
@@ -1408,10 +1408,10 @@ def pkdHmacSign(skP, pkR, msg, salt, info)
             <p id="section-5.2-3.3.1"><code>msg</code>: JWS Signing Input<a href="#section-5.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.4">
-            <p id="section-5.2-3.4.1"><code>salt</code> : Optional salt for key derivation<a href="#section-5.2-3.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.4.1"><code>salt</code> : salt for key derivation<a href="#section-5.2-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.5">
-            <p id="section-5.2-3.5.1"><code>info</code> : Optional info for key derivation<a href="#section-5.2-3.5.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.5.1"><code>info</code> : info for key derivation<a href="#section-5.2-3.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.6">
             <p id="section-5.2-3.6.1"><code>signature</code> : the Message Authentication Code<a href="#section-5.2-3.6.1" class="pilcrow">¶</a></p>
@@ -1485,7 +1485,10 @@ Implementations <span class="bcp14">MUST</span> reject a JWS if the <code>pkr</c
 Implementations <span class="bcp14">MUST</span> reject a JWS if the <code>pkp</code> key cannot be resolved unambiguously at validation time or is incompatible with the key information in <code>pkr</code>.<a href="#section-6.1.1-2.2.2" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.1.1-2.3">
-              <p id="section-6.1.1-2.3.1"><code>info</code> (string, <span class="bcp14">OPTIONAL</span>): Context- and application-specific information used as the info parameter to the KDF.<a href="#section-6.1.1-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-6.1.1-2.3.1"><code>info</code> (string, <span class="bcp14">OPTIONAL</span>): Context- and application-specific information used as the info parameter to the KDF. If absent, the default string value "PKDH-v1" <span class="bcp14">SHALL</span> be used.<a href="#section-6.1.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6.1.1-2.4">
+              <p id="section-6.1.1-2.4.1"><code>salt</code> (string, <span class="bcp14">OPTIONAL</span>): The salt parameter to the KDF encoded as BASE64(salt). If absent, TBD.<a href="#section-6.1.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-6.1.1-3">For a machine-readable definition of these fields, see the JSON Schema in <span><a href="#appendix-a" class="internal xref">Appendix A</a> (<a href="#appendix-a" class="auto internal xref">Appendix B</a>)</span>.<a href="#section-6.1.1-3" class="pilcrow">¶</a></p>
@@ -1521,7 +1524,8 @@ Implementations <span class="bcp14">MUST</span> reject a JWS if the <code>pkp</c
         "y":"XGJRplhubKDv6cFA7e9-yn7F89UUwt57JVLAOS1tpXE"
       }
     },
-    "info":"PKDH-v1"
+    "info":"PKDH-v1",
+    "salt": "V2hhdCBhIHNhbHQ="
   }
 }
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
@@ -1709,6 +1713,9 @@ base64-encoded MAC
       "$ref": "#/$defs/keyRef"
     },
     "info": {
+      "type": "string"
+    },
+    "salt": {
       "type": "string"
     },
     "params": {

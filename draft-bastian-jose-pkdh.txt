@@ -146,7 +146,7 @@ Table of Contents
 
    *Producer*:  The party that performs the DH-KA first, derives the MAC
       key via a KDF, constructs the JOSE Header and JWS Payload, and
-      computes the JWS Signature.
+      computes the JWS Signature value.
 
    *Recipient*:  The party that performs the DH-KA second, derives the
       MAC key via information in the JWS, and validates the JWS using
@@ -219,9 +219,9 @@ Table of Contents
 
    *  msg: JWS Signing Input
 
-   *  salt : Optional salt for key derivation
+   *  salt : salt for key derivation
 
-   *  info : Optional info for key derivation
+   *  info : info for key derivation
 
    Function:
 
@@ -247,9 +247,9 @@ Table of Contents
 
    *  msg: JWS Signing Input
 
-   *  salt : Optional salt for key derivation
+   *  salt : salt for key derivation
 
-   *  info : Optional info for key derivation
+   *  info : info for key derivation
 
    *  signature : the Message Authentication Code
 
@@ -323,7 +323,11 @@ Table of Contents
       the key information in pkr.
 
    *  info (string, OPTIONAL): Context- and application-specific
-      information used as the info parameter to the KDF.
+      information used as the info parameter to the KDF.  If absent, the
+      default string value "PKDH-v1" SHALL be used.
+
+   *  salt (string, OPTIONAL): The salt parameter to the KDF encoded as
+      BASE64(salt).  If absent, TBD.
 
    For a machine-readable definition of these fields, see the JSON
    Schema in Appendix A (Appendix B).
@@ -352,7 +356,8 @@ Table of Contents
            "y":"XGJRplhubKDv6cFA7e9-yn7F89UUwt57JVLAOS1tpXE"
          }
        },
-       "info":"PKDH-v1"
+       "info":"PKDH-v1",
+       "salt": "V2hhdCBhIHNhbHQ="
      }
    }
 
@@ -487,6 +492,9 @@ Appendix B.  Appendix A.  JSON Schema for the "pkdh" Header Parameter
          "$ref": "#/$defs/keyRef"
        },
        "info": {
+         "type": "string"
+       },
+       "salt": {
          "type": "string"
        },
        "params": {
