@@ -1190,7 +1190,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-public-key-derived-hmac-for" class="internal xref">Public Key Derived HMAC for JOSE</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-the-pkds-header-parameter" class="internal xref">The "pkds" Header Parameter</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-the-pkdh-header-parameter" class="internal xref">The "pkdh" Header Parameter</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
                     <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-syntax-and-semantics" class="internal xref">Syntax and semantics</a></p>
@@ -1231,7 +1231,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-appendix-a-json-schema-for-" class="internal xref">Appendix A. JSON Schema for the "pkds" Header Parameter</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-appendix-a-json-schema-for-" class="internal xref">Appendix A. JSON Schema for the "pkdh" Header Parameter</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
             <p id="section-toc.1-1.12.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
@@ -1246,7 +1246,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">JSON Web Signature (JWS) <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span> and JSON Web Algorithms (JWA) <span>[<a href="#RFC7518" class="cite xref">RFC7518</a>]</span> specify how to secure content with Hash-based Message Authentication Codes (HMAC) <span>[<a href="#RFC2104" class="cite xref">RFC2104</a>]</span> using a shared symmetric key. These specifications do not provide means to dynamically derive a MAC key for JWS validation using only public information embedded in the JWS.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">This specification defines a new protected header parameter, <code>pkds</code> (public key derived secret), which contains information required to derive an HMAC key using a Diffie-Hellman key agreement (DH-KA) and a key derivation function (KDF). The JWS Producer's DH-KA public key appears either in the <code>pkds</code> parameter or in a claims element for use in the key agreement computation. The <code>pkds</code> parameter also includes the JWS Recipient's DH-KA public key, used by the JWS Producer during key agreement, as well as the KDF parameters necessary for deriving the MAC key.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">This specification defines a new protected header parameter, <code>pkdh</code> (public key derived HMAC), which contains information required to derive an HMAC key using a Diffie-Hellman key agreement (DH-KA) and a key derivation function (KDF). The JWS Producer's DH-KA public key appears either in the <code>pkdh</code> parameter or in a claims element for use in the key agreement computation. The <code>pkdh</code> parameter also includes the JWS Recipient's DH-KA public key, used by the JWS Producer during key agreement, as well as the KDF parameters necessary for deriving the MAC key.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This specification also defines new <code>alg</code> parameter values, that are fully-specified according to <a href="https://www.ietf.org/archive/id/draft-jones-jose-fully-specified-algorithms-00.html">Fully Specified Algorithms</a>.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">The method is useful in settings where pre-shared keys are undesirable or infeasible, and where direct key distribution or key wrapping introduces operational concerns. It enables the use of HMAC-based signatures that can be validated solely with information embedded in a JWS.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">A primary motivation for this work is to enable HMAC signature validation from information contained within an SD-JWT, mirroring capabilities available in credential formats like <span>[<a href="#ISO-18013-5" class="cite xref">ISO-18013-5</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
@@ -1455,24 +1455,24 @@ def pkdHmacVerify(skR, pkP, msg, signature, salt, info)
           <p id="section-6-3.1.1"><code>alg</code> : <span class="bcp14">REQUIRED</span>. The algorithm parameter describes the chosen signature suite, for example the ones described in <span><a href="#generic_suites" class="internal xref">Suites</a> (<a href="#generic_suites" class="auto internal xref">Section 5.3</a>)</span>.<a href="#section-6-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-3.2">
-          <p id="section-6-3.2.1"><code>pkds</code> : <span class="bcp14">REQUIRED</span>. The <code>pkds</code> (Public key derived secret) parameter specifies the inputs needed to derive a symmetric key for MAC <span><a href="#pkds_header" class="internal xref">PKDS Headermake</a> (<a href="#pkds_header" class="auto internal xref">Section 6.1</a>)</span>.<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-6-3.2.1"><code>pkdh</code> : <span class="bcp14">REQUIRED</span>. The <code>pkdh</code> (public key derived HMAC) parameter specifies the inputs needed to derive a symmetric key for MAC <span><a href="#pkdh_header" class="internal xref">PKDH Headermake</a> (<a href="#pkdh_header" class="auto internal xref">Section 6.1</a>)</span>.<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-3.3">
           <p id="section-6-3.3.1"><code>nonce</code> : <span class="bcp14">OPTIONAL</span>. The <code>nonce</code> may be provided by the Recipient additional to it's public key and ensure additional freshness of the signature. If provided, the Producer <span class="bcp14">SHOULD</span> add the <code>nonce</code> to the header.<a href="#section-6-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<div id="pkds_header">
+<div id="pkdh_header">
 <section id="section-6.1">
-        <h3 id="name-the-pkds-header-parameter">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-the-pkds-header-parameter" class="section-name selfRef">The "pkds" Header Parameter</a>
+        <h3 id="name-the-pkdh-header-parameter">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-the-pkdh-header-parameter" class="section-name selfRef">The "pkdh" Header Parameter</a>
         </h3>
-<p id="section-6.1-1">The pkds protected header parameter specifies the inputs needed to derive a symmetric key for MAC computation using a key agreement and derivation scheme. Its value is a JSON object that includes identifiers, public keys, and algorithm-specific parameters relevant to the derivation.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">The pkdh protected header parameter specifies the inputs needed to derive a symmetric key for MAC computation using a key agreement and derivation scheme. Its value is a JSON object that includes identifiers, public keys, and algorithm-specific parameters relevant to the derivation.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <div id="syntax-and-semantics">
 <section id="section-6.1.1">
           <h4 id="name-syntax-and-semantics">
 <a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-syntax-and-semantics" class="section-name selfRef">Syntax and semantics</a>
           </h4>
-<p id="section-6.1.1-1">The <code>pkds</code> Header Parameter value <span class="bcp14">MUST</span> be a JSON object with the following fields:<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-1">The <code>pkdh</code> Header Parameter value <span class="bcp14">MUST</span> be a JSON object with the following fields:<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1.1-2.1">
               <p id="section-6.1.1-2.1.1"><code>pkr</code> (object, <span class="bcp14">REQUIRED</span>): The Recipient's public key used in DH-KA. The <code>pkr</code> object <span class="bcp14">MUST</span> contain at least one key claim as defined in Section 4.1 of <span>[<a href="#RFC7515" class="cite xref">RFC7515</a>]</span>.<a href="#section-6.1.1-2.1.1" class="pilcrow">¶</a></p>
@@ -1504,7 +1504,7 @@ Implementations <span class="bcp14">MUST</span> reject a JWS if the <code>pkp</c
 {
   "typ":"JWT",
   "alg":"ECDH-P256+HKDF-SHA256+HS256",
-  "pkds":{
+  "pkdh":{
     "pkp":{
       "jwk":{
         "kty":"EC",
@@ -1521,7 +1521,7 @@ Implementations <span class="bcp14">MUST</span> reject a JWS if the <code>pkp</c
         "y":"XGJRplhubKDv6cFA7e9-yn7F89UUwt57JVLAOS1tpXE"
       }
     },
-    "info":"PKDS-v1"
+    "info":"PKDH-v1"
   }
 }
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
@@ -1596,7 +1596,7 @@ base64-encoded MAC
 <p id="section-8-1">Define:<a href="#section-8-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-8-2.1">
-          <p id="section-8-2.1.1">define new <code>pkds</code> header parameter<a href="#section-8-2.1.1" class="pilcrow">¶</a></p>
+          <p id="section-8-2.1.1">define new <code>pkdh</code> header parameter<a href="#section-8-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-8-2.2">
           <p id="section-8-2.2.1">alg values for <strong>TODO</strong> and some more<a href="#section-8-2.2.1" class="pilcrow">¶</a></p>
@@ -1692,13 +1692,14 @@ base64-encoded MAC
 <div id="appendix-a">
 <section id="appendix-B">
       <h2 id="name-appendix-a-json-schema-for-">
-<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-appendix-a-json-schema-for-" class="section-name selfRef">Appendix A. JSON Schema for the "pkds" Header Parameter</a>
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-appendix-a-json-schema-for-" class="section-name selfRef">Appendix A. JSON Schema for the "pkdh" Header Parameter</a>
       </h2>
-<p id="appendix-B-1"><code>JSON
+<div class="alignLeft art-text artwork" id="appendix-B-1">
+<pre>
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/pkds.schema.json",
-  "title": "JOSE Header Parameter: pkds",
+  "$id": "https://example.com/schemas/pkdh.schema.json",
+  "title": "JOSE Header Parameter: pkdh",
   "type": "object",
   "properties": {
     "pkp": {
@@ -1706,6 +1707,9 @@ base64-encoded MAC
     },
     "pkr": {
       "$ref": "#/$defs/keyRef"
+    },
+    "info": {
+      "type": "string"
     },
     "params": {
       "type": "object"
@@ -1785,7 +1789,8 @@ base64-encoded MAC
     }
   }
 }
-</code><a href="#appendix-B-1" class="pilcrow">¶</a></p>
+</pre><a href="#appendix-B-1" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="authors-addresses">

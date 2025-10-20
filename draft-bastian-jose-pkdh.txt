@@ -82,7 +82,7 @@ Table of Contents
      5.2.  Signature Verification
      5.3.  Signature Suites
    6.  Public Key Derived HMAC for JOSE
-     6.1.  The "pkds" Header Parameter
+     6.1.  The "pkdh" Header Parameter
        6.1.1.  Syntax and semantics
      6.2.  Example JWT (*TODO*)
    7.  Security Considerations
@@ -93,7 +93,7 @@ Table of Contents
      9.1.  Normative References
      9.2.  Informative References
    Appendix A.  Acknowledgments
-   Appendix B.  Appendix A.  JSON Schema for the "pkds" Header
+   Appendix B.  Appendix A.  JSON Schema for the "pkdh" Header
            Parameter
    Authors' Addresses
 
@@ -106,12 +106,12 @@ Table of Contents
    key for JWS validation using only public information embedded in the
    JWS.
 
-   This specification defines a new protected header parameter, pkds
-   (public key derived secret), which contains information required to
+   This specification defines a new protected header parameter, pkdh
+   (public key derived HMAC), which contains information required to
    derive an HMAC key using a Diffie-Hellman key agreement (DH-KA) and a
    key derivation function (KDF).  The JWS Producer's DH-KA public key
-   appears either in the pkds parameter or in a claims element for use
-   in the key agreement computation.  The pkds parameter also includes
+   appears either in the pkdh parameter or in a claims element for use
+   in the key agreement computation.  The pkdh parameter also includes
    the JWS Recipient's DH-KA public key, used by the JWS Producer during
    key agreement, as well as the KDF parameters necessary for deriving
    the MAC key.
@@ -285,8 +285,8 @@ Table of Contents
       signature suite, for example the ones described in Suites
       (Section 5.3).
 
-   *  pkds : REQUIRED.  The pkds (Public key derived secret) parameter
-      specifies the inputs needed to derive a symmetric key for MAC PKDS
+   *  pkdh : REQUIRED.  The pkdh (public key derived HMAC) parameter
+      specifies the inputs needed to derive a symmetric key for MAC PKDH
       Headermake (Section 6.1).
 
    *  nonce : OPTIONAL.  The nonce may be provided by the Recipient
@@ -294,9 +294,9 @@ Table of Contents
       the signature.  If provided, the Producer SHOULD add the nonce to
       the header.
 
-6.1.  The "pkds" Header Parameter
+6.1.  The "pkdh" Header Parameter
 
-   The pkds protected header parameter specifies the inputs needed to
+   The pkdh protected header parameter specifies the inputs needed to
    derive a symmetric key for MAC computation using a key agreement and
    derivation scheme.  Its value is a JSON object that includes
    identifiers, public keys, and algorithm-specific parameters relevant
@@ -304,7 +304,7 @@ Table of Contents
 
 6.1.1.  Syntax and semantics
 
-   The pkds Header Parameter value MUST be a JSON object with the
+   The pkdh Header Parameter value MUST be a JSON object with the
    following fields:
 
    *  pkr (object, REQUIRED): The Recipient's public key used in DH-KA.
@@ -335,7 +335,7 @@ Table of Contents
    {
      "typ":"JWT",
      "alg":"ECDH-P256+HKDF-SHA256+HS256",
-     "pkds":{
+     "pkdh":{
        "pkp":{
          "jwk":{
            "kty":"EC",
@@ -352,7 +352,7 @@ Table of Contents
            "y":"XGJRplhubKDv6cFA7e9-yn7F89UUwt57JVLAOS1tpXE"
          }
        },
-       "info":"PKDS-v1"
+       "info":"PKDH-v1"
      }
    }
 
@@ -404,7 +404,7 @@ Table of Contents
 
    Define:
 
-   *  define new pkds header parameter
+   *  define new pkdh header parameter
 
    *  alg values for *TODO* and some more
 
@@ -472,22 +472,101 @@ Appendix A.  Acknowledgments
 
    *  John Bradley
 
-Appendix B.  Appendix A.  JSON Schema for the "pkds" Header Parameter
+Appendix B.  Appendix A.  JSON Schema for the "pkdh" Header Parameter
 
-   JSON { "$schema": "https://json-schema.org/draft/2020-12/schema",
-   "$id": "https://example.com/schemas/pkds.schema.json", "title": "JOSE
-   Header Parameter: pkds", "type": "object", "properties": { "pkp": {
-   "$ref": "#/$defs/keyRef" }, "pkr": { "$ref": "#/$defs/keyRef" },
-   "params": { "type": "object" } }, "required": [ "pkr" ],
-   "additionalProperties": false, "$defs": { "keyRef": { "type":
-   "object", "properties": { "jwk": { "type": "object" }, "kid": {
-   "type": "string" }, "jkt": { "type": "string" }, "jku": { "type":
-   "string" }, "x5c": { "type": "array", "items": { "type": "string" }
-   }, "x5u": { "type": "string" }, "x5t": { "type": "string" } },
-   "anyOf": [ { "required": [ "jwk" ] }, { "required": [ "kid" ] }, {
-   "required": [ "jkt" ] }, { "required": [ "jku" ] }, { "required": [
-   "x5c" ] }, { "required": [ "x5u" ] }, { "required": [ "x5t" ] } ],
-   "additionalProperties": false } } }
+   {
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "$id": "https://example.com/schemas/pkdh.schema.json",
+     "title": "JOSE Header Parameter: pkdh",
+     "type": "object",
+     "properties": {
+       "pkp": {
+         "$ref": "#/$defs/keyRef"
+       },
+       "pkr": {
+         "$ref": "#/$defs/keyRef"
+       },
+       "info": {
+         "type": "string"
+       },
+       "params": {
+         "type": "object"
+       }
+     },
+     "required": [
+       "pkr"
+     ],
+     "additionalProperties": false,
+     "$defs": {
+       "keyRef": {
+         "type": "object",
+         "properties": {
+           "jwk": {
+             "type": "object"
+           },
+           "kid": {
+             "type": "string"
+           },
+           "jkt": {
+             "type": "string"
+           },
+           "jku": {
+             "type": "string"
+           },
+           "x5c": {
+             "type": "array",
+             "items": {
+               "type": "string"
+             }
+           },
+           "x5u": {
+             "type": "string"
+           },
+           "x5t": {
+             "type": "string"
+           }
+         },
+         "anyOf": [
+           {
+             "required": [
+               "jwk"
+             ]
+           },
+           {
+             "required": [
+               "kid"
+             ]
+           },
+           {
+             "required": [
+               "jkt"
+             ]
+           },
+           {
+             "required": [
+               "jku"
+             ]
+           },
+           {
+             "required": [
+               "x5c"
+             ]
+           },
+           {
+             "required": [
+               "x5u"
+             ]
+           },
+           {
+             "required": [
+               "x5t"
+             ]
+           }
+         ],
+         "additionalProperties": false
+       }
+     }
+   }
 
 Authors' Addresses
 
