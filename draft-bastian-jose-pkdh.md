@@ -96,7 +96,7 @@ A primary motivation for this work is to enable HMAC signature validation from i
 The draft uses "JSON Web Signature", "JOSE Header", "JWS Signature", "JWS Signing Input" as defined by {{RFC7515}}.
 
 **Producer**:
-: The party that performs the DH-KA first, derives the MAC key via a KDF, constructs the JOSE Header and JWS Payload, and computes the JWS Signature.
+: The party that performs the DH-KA first, derives the MAC key via a KDF, constructs the JOSE Header and JWS Payload, and computes the JWS Signature value.
 
 **Recipient**:
 : The party that performs the DH-KA second, derives the MAC key via information in the JWS, and validates the JWS using the MAC key according to {{RFC7515}}.
@@ -138,8 +138,8 @@ Input:
  * `skP`: private key of the Producer
  * `pkR`: public key of the Recipient
  * `msg`: JWS Signing Input
- * `salt` : Optional salt for key derivation
- * `info` : Optional info for key derivation
+ * `salt` : salt for key derivation
+ * `info` : info for key derivation
 
 Function:
 
@@ -162,8 +162,8 @@ Input:
  * `skR`: private key of the Recipient
  * `pkP`: public key of the Producer
  * `msg`: JWS Signing Input
- * `salt` : Optional salt for key derivation
- * `info` : Optional info for key derivation
+ * `salt` : salt for key derivation
+ * `info` : info for key derivation
  * `signature` : the Message Authentication Code
 
 Function:
@@ -210,7 +210,9 @@ The `pkdh` Header Parameter value MUST be a JSON object with the following field
 
   Implementations MUST reject a JWS if the `pkp` key cannot be resolved unambiguously at validation time or is incompatible with the key information in `pkr`.
 
-* `info` (string, OPTIONAL): Context- and application-specific information used as the info parameter to the KDF.
+* `info` (string, OPTIONAL): Context- and application-specific information used as the info parameter to the KDF. If absent, the default string value "PKDH-v1" SHALL be used.
+
+* `salt` (string, OPTIONAL): The salt parameter to the KDF encoded as BASE64(salt). If absent, TBD.
 
 For a machine-readable definition of these fields, see the JSON Schema in [Appendix A](#appendix-a).
 
@@ -241,7 +243,8 @@ The JWT/JWS header:
         "y":"XGJRplhubKDv6cFA7e9-yn7F89UUwt57JVLAOS1tpXE"
       }
     },
-    "info":"PKDH-v1"
+    "info":"PKDH-v1",
+    "salt": "V2hhdCBhIHNhbHQ="
   }
 }
 ~~~
@@ -317,6 +320,9 @@ Thanks to:
       "$ref": "#/$defs/keyRef"
     },
     "info": {
+      "type": "string"
+    },
+    "salt": {
       "type": "string"
     },
     "params": {
