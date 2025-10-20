@@ -404,3 +404,35 @@ Thanks to:
   }
 }
 ~~~
+
+# Document History
+{:numbered="false"}
+
+-01
+
+* use consistent key naming
+* rename pkds header to pkdh header
+* add salt to pkdh header
+
+-00
+
+* initial draft after renaming to draft-bastian-jose-pkdh
+
+
+\[ draft-bastian-jose-dvs \]
+
+-02
+
+* remove term "Designated Verifier Signatures", replace with "Public Key Derived HMAC"
+* add pkds header structure
+* rename Signing Party to Producer
+* rename Verifying Party to Recipient
+
+-01
+
+* remove all HPKE-related parts
+* add co-editors Stefan Santesson and Peter Lee Altmann
+
+-00
+
+* initial draft
