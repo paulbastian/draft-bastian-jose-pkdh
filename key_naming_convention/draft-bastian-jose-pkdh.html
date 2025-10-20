@@ -1379,7 +1379,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-5.1-4">Function:<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1-5">
 <pre>
-def pkdHhmacSign(skP, pkR, msg, salt, info)
+def pkdHmacSign(skP, pkR, msg, salt, info)
 
     dh =  DH(skP, pkR)
     prk = Extract(salt, dh)
@@ -1402,7 +1402,7 @@ def pkdHhmacSign(skP, pkR, msg, salt, info)
             <p id="section-5.2-3.1.1"><code>skR</code>: private key of the Recipient<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.2">
-            <p id="section-5.2-3.2.1"><code>pkS</code>: public key of the Producer<a href="#section-5.2-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.2.1"><code>pkP</code>: public key of the Producer<a href="#section-5.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.3">
             <p id="section-5.2-3.3.1"><code>msg</code>: JWS Signing Input<a href="#section-5.2-3.3.1" class="pilcrow">¶</a></p>
@@ -1420,9 +1420,9 @@ def pkdHhmacSign(skP, pkR, msg, salt, info)
 <p id="section-5.2-4">Function:<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.2-5">
 <pre>
-def pkdHhmacVerify(skR, pkS, msg, signature, salt, info)
+def pkdHmacVerify(skR, pkP, msg, signature, salt, info)
 
-    dh =  DH(skR, pkS)
+    dh =  DH(skR, pkP)
     prk = Extract(salt, dh)
     k = Expand(prk, info, Nk)
     signature' = MacSign(k, msg)
