@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-14T01:06:37.143516+00:00",
+  "timestamp": "2025-10-21T01:10:07.759489+00:00",
   "repo": "paulbastian/draft-bastian-jose-pkdh",
   "labels": [
     {
@@ -478,15 +478,15 @@
       "id": "I_kwDOLDmL8c7L5dcu",
       "title": "rework JOSE parameter description",
       "url": "https://github.com/paulbastian/draft-bastian-jose-pkdh/issues/24",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mickrau",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "move chapter 4 \"The \"pkds\" Header Parameter\" into chapter 7 \"Designated Verifier Signatures for JOSE\"",
       "createdAt": "2025-09-16T07:24:15Z",
-      "updatedAt": "2025-09-16T07:24:15Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-20T12:33:23Z",
+      "closedAt": "2025-10-20T12:33:23Z",
       "comments": []
     },
     {
@@ -561,6 +561,38 @@
       "body": "> Should we define info as text only and not allow byte to avoid base64url twice encoding? \n\n _Originally posted by @AltmannPeter in [#25](https://github.com/paulbastian/draft-bastian-jose-dvs/pull/25/files#r2369579232)_",
       "createdAt": "2025-09-25T07:32:44Z",
       "updatedAt": "2025-09-25T07:32:44Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOLDmL8c7SiUSg",
+      "title": "key naming convention",
+      "url": "https://github.com/paulbastian/draft-bastian-jose-pkdh/issues/29",
+      "state": "OPEN",
+      "author": "mickrau",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We should be consistent with the key identifiers when describing algorithm, header syntax, examples.\n\nI think we agreed to use \"Producer\" and \"Recipient\".\nI don't think there has been any agreement yet on the naming of private and public keys, has there?\n\nOption1 (as used in Algorithm and Example):\nskP, pkP private and public key of the Producer\nskR, pkR private and public. key of the Receiver\n\nOption2 (as used in pkds header syntax):\nppk, ?: producer's public key\nrpk, ?: recipient's public key\n\nHow to name private keys in Option2?",
+      "createdAt": "2025-10-20T12:12:33Z",
+      "updatedAt": "2025-10-20T12:13:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 31,
+      "id": "I_kwDOLDmL8c7SikM4",
+      "title": "rename pkds to pkdh header",
+      "url": "https://github.com/paulbastian/draft-bastian-jose-pkdh/issues/31",
+      "state": "OPEN",
+      "author": "mickrau",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "to reflect new spec title",
+      "createdAt": "2025-10-20T12:34:58Z",
+      "updatedAt": "2025-10-20T12:34:58Z",
       "closedAt": null,
       "comments": []
     }
@@ -2281,6 +2313,226 @@
           "body": "",
           "createdAt": "2025-10-03T10:18:22Z",
           "updatedAt": "2025-10-03T10:18:22Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOLDmL8c6un1fo",
+      "title": "use same key names everywhere",
+      "url": "https://github.com/paulbastian/draft-bastian-jose-pkdh/pull/30",
+      "state": "MERGED",
+      "author": "mickrau",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "use Option1 (as used in Algorithm and Example):\r\nskP, pkP private and public key of the Producer\r\nskR, pkR private and public. key of the Receiver\r\n\r\nin the JWS header, lowercase letters are used to comply with conventions.\r\n\r\nSolves #29 ",
+      "createdAt": "2025-10-20T12:31:24Z",
+      "updatedAt": "2025-10-20T15:03:38Z",
+      "baseRepository": "paulbastian/draft-bastian-jose-pkdh",
+      "baseRefName": "main",
+      "baseRefOid": "ae12ef575164e6f1bc9f9697b33001faf9a24ce9",
+      "headRepository": "paulbastian/draft-bastian-jose-pkdh",
+      "headRefName": "key_naming_convention",
+      "headRefOid": "191cc0ba515dd17d59ef7574b24bb36b54a83214",
+      "closedAt": "2025-10-20T15:03:37Z",
+      "mergedAt": "2025-10-20T15:03:37Z",
+      "mergedBy": "mickrau",
+      "mergeCommit": {
+        "oid": "37779c8cdf1c284b787c18c79da445480da55bc4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLDmL8c7IEhQf",
+          "commit": {
+            "abbreviatedOid": "191cc0b"
+          },
+          "author": "Razumain",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T14:08:49Z",
+          "updatedAt": "2025-10-20T14:08:49Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLDmL8c7IE4Uz",
+          "commit": {
+            "abbreviatedOid": "191cc0b"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T14:34:12Z",
+          "updatedAt": "2025-10-20T14:34:12Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOLDmL8c6un-7Y",
+      "title": "Rename pkds to pkdh header",
+      "url": "https://github.com/paulbastian/draft-bastian-jose-pkdh/pull/32",
+      "state": "MERGED",
+      "author": "mickrau",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Solves #31 ",
+      "createdAt": "2025-10-20T12:46:08Z",
+      "updatedAt": "2025-10-20T15:06:11Z",
+      "baseRepository": "paulbastian/draft-bastian-jose-pkdh",
+      "baseRefName": "main",
+      "baseRefOid": "37779c8cdf1c284b787c18c79da445480da55bc4",
+      "headRepository": "paulbastian/draft-bastian-jose-pkdh",
+      "headRefName": "rename_pkds_to_pkdh_header",
+      "headRefOid": "c9ea8f8c8e51182b6de9bd5bf631abd0ec447169",
+      "closedAt": "2025-10-20T15:06:11Z",
+      "mergedAt": "2025-10-20T15:06:11Z",
+      "mergedBy": "mickrau",
+      "mergeCommit": {
+        "oid": "cf870327f29572bd0e0913bbee152dcb32ab54be"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLDmL8c7IEfD9",
+          "commit": {
+            "abbreviatedOid": "5df63ca"
+          },
+          "author": "Razumain",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T14:06:18Z",
+          "updatedAt": "2025-10-20T14:06:18Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLDmL8c7IEgt2",
+          "commit": {
+            "abbreviatedOid": "5df63ca"
+          },
+          "author": "Razumain",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T14:08:08Z",
+          "updatedAt": "2025-10-20T14:08:08Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLDmL8c7IE6F0",
+          "commit": {
+            "abbreviatedOid": "5df63ca"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T14:36:19Z",
+          "updatedAt": "2025-10-20T14:36:19Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOLDmL8c6up8HJ",
+      "title": "add salt as parameter",
+      "url": "https://github.com/paulbastian/draft-bastian-jose-pkdh/pull/33",
+      "state": "MERGED",
+      "author": "mickrau",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Proposal by Stefan",
+      "createdAt": "2025-10-20T15:25:08Z",
+      "updatedAt": "2025-10-20T18:17:18Z",
+      "baseRepository": "paulbastian/draft-bastian-jose-pkdh",
+      "baseRefName": "main",
+      "baseRefOid": "cf870327f29572bd0e0913bbee152dcb32ab54be",
+      "headRepository": "paulbastian/draft-bastian-jose-pkdh",
+      "headRefName": "salt_as_parameter",
+      "headRefOid": "0907ae7dc174089c373e9788adf934d3ed7ff19a",
+      "closedAt": "2025-10-20T18:17:18Z",
+      "mergedAt": "2025-10-20T18:17:18Z",
+      "mergedBy": "paulbastian",
+      "mergeCommit": {
+        "oid": "9c0b056cffef4646cf802b1a79278cae77c690c5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLDmL8c7IHuxA",
+          "commit": {
+            "abbreviatedOid": "0907ae7"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T18:17:07Z",
+          "updatedAt": "2025-10-20T18:17:07Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOLDmL8c6usSeH",
+      "title": "add document history",
+      "url": "https://github.com/paulbastian/draft-bastian-jose-pkdh/pull/34",
+      "state": "MERGED",
+      "author": "mickrau",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-20T19:01:54Z",
+      "updatedAt": "2025-10-20T19:57:59Z",
+      "baseRepository": "paulbastian/draft-bastian-jose-pkdh",
+      "baseRefName": "main",
+      "baseRefOid": "9c0b056cffef4646cf802b1a79278cae77c690c5",
+      "headRepository": "paulbastian/draft-bastian-jose-pkdh",
+      "headRefName": "add_document_history",
+      "headRefOid": "4e97e98e3d18405de238d6052d5a462fe5757ba0",
+      "closedAt": "2025-10-20T19:57:59Z",
+      "mergedAt": "2025-10-20T19:57:58Z",
+      "mergedBy": "paulbastian",
+      "mergeCommit": {
+        "oid": "3af347027f87b06e9040c1faa90db729e09b553e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLDmL8c7IIMoK",
+          "commit": {
+            "abbreviatedOid": "4e97e98"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR adds a comprehensive document history section to the JOSE PKDH draft specification, tracking the evolution of the document from its initial version through the current revision.\n\n**Key Changes:**\n- Added a \"Document History\" section documenting changes across versions -00 through -01\n- Included historical changes from the predecessor draft (draft-bastian-jose-dvs)\n\n\n\n\n\n---\n\n<sub>**Tip:** Customize your code reviews with copilot-instructions.md. <a href=\"/paulbastian/draft-bastian-jose-pkdh/new/main/.github?filename=copilot-instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Create the file</a> or <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">learn how to get started</a>.</sub>",
+          "createdAt": "2025-10-20T19:02:24Z",
+          "updatedAt": "2025-10-20T19:02:24Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOLDmL8c7IIwu0",
+          "commit": {
+            "abbreviatedOid": "4e97e98"
+          },
+          "author": "paulbastian",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-20T19:57:53Z",
+          "updatedAt": "2025-10-20T19:57:53Z",
           "comments": []
         }
       ]
